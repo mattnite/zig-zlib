@@ -1,9 +1,5 @@
 const std = @import("std");
-const download = @import("download");
-usingnamespace std.build;
-
 const Self = @This();
-const name = "z";
 
 fn root() []const u8 {
     return std.fs.path.dirname(@src().file) orelse ".";

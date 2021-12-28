@@ -29,4 +29,4 @@ jobs:
         version: master
 
     - name: Build
-      run: zig build test -Dtarget=${{ matrix.target }} 
+      run: zig build -Dtarget=${{ matrix.target }} 

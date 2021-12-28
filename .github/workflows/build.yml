@@ -27,7 +27,6 @@ jobs:
           x86_64-windows-gnu,
         ]
     steps:
-
     - name: Checkout
       uses: actions/checkout@v2
       with:
@@ -41,3 +40,29 @@ jobs:
 
     - name: Build
       run: zig build -Dtarget=${{ matrix.target }} 
+
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [
+          ubuntu-latest
+          windows-latest
+          macos-latest
+        ]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 0
+
+    - name: Setup Zig
+      uses: goto-bus-stop/setup-zig@v1.3.0
+      with:
+        version: master
+
+    - name: Build
+      run: zig build test
+
+

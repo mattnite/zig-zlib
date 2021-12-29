@@ -21,7 +21,7 @@ pub fn create(b: *std.build.Builder, target: std.zig.CrossTarget, mode: std.buil
     ret.setBuildMode(mode);
     ret.linkLibC();
 
-    ret.addCSourceFiles(srcs, &.{"-fno-sanitize=all"});
+    ret.addCSourceFiles(srcs, &.{});
 
     return ret;
 }

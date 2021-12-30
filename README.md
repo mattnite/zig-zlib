@@ -6,7 +6,9 @@
 
 If you like this project or other works of mine, please consider donating or sponsoring me on Github.
 
+<div>
 <iframe src="https://github.com/sponsors/mattnite/button" title="Sponsor mattnite" height="35" width="116" style="border: 0;"></iframe>
+</div>
 
 ## How to use
 

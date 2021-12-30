@@ -27,10 +27,10 @@ jobs:
           x86_64-windows-gnu,
         ]
         mode: [
-          debug
-          release-safe
-          release-fast
-          release-small
+          debug,
+          release-safe,
+          release-fast,
+          release-small,
         ]
     steps:
     - name: Checkout
@@ -58,9 +58,9 @@ jobs:
         ]
         mode: [
           debug
-          release-safe
-          release-fast
-          release-small
+          release-safe,
+          release-fast,
+          release-small,
         ]
     steps:
     - name: Checkout

@@ -44,7 +44,12 @@ jobs:
       with:
         version: master
 
-    - name: Build
+    - name: Build Debug
+      if: ${{ matrix.mode == 'debug' }}
+      run: zig build -Dtarget=${{ matrix.target }} 
+
+    - name: Build Release
+      if: ${{ matrix.mode != 'debug' }}
       run: zig build -D${{ matrix.mode }} -Dtarget=${{ matrix.target }} 
 
   test:
@@ -57,7 +62,7 @@ jobs:
           macos-latest,
         ]
         mode: [
-          debug
+          debug,
           release-safe,
           release-fast,
           release-small,
@@ -74,7 +79,12 @@ jobs:
       with:
         version: master
 
-    - name: Build
+    - name: Build and Test Debug
+      if: ${{ matrix.mode == 'debug' }}
+      run: zig build test
+
+    - name: Build and Test Release
+      if: ${{ matrix.mode != 'debug' }}
       run: zig build test -D${{ matrix.mode }}
 
 

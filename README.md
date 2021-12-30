@@ -18,7 +18,7 @@ In order to statically link zlib into your application and access the bindings w
 const zlib = @import("path/to/zlib.zig");
 
 pub fn build(b: *std.build.Builder) void {
-    ...
+    // ...
 
     const lib = zlib.create(b, target, mode, .{
         .import_str = "zlib",

@@ -16,36 +16,29 @@ fn pathJoinRoot(comptime components: []const []const u8) []const u8 {
 const package_path = pathJoinRoot(&.{ "src", "main.zig" });
 pub const include_dir = pathJoinRoot(&.{"c"});
 pub const Options = struct {
-    import_str: ?[]const u8 = null,
+    import_name: ?[]const u8 = null,
 };
 
 pub const Library = struct {
     step: *std.build.LibExeObjStep,
-    opts: Options,
 
-    pub fn link(self: Library, other: *std.build.LibExeObjStep) void {
+    pub fn link(self: Library, other: *std.build.LibExeObjStep, opts: Options) void {
         other.addIncludeDir(include_dir);
         other.linkLibrary(self.step);
 
-        if (self.opts.import_str) |import_str|
-            other.addPackagePath(import_str, package_path);
+        if (opts.import_name) |import_name|
+            other.addPackagePath(import_name, package_path);
     }
 };
 
-/// if opts.import_str is set, the zlib bindings are added to targets that this Library is link()'ed to
-pub fn create(b: *std.build.Builder, target: std.zig.CrossTarget, mode: std.builtin.Mode, opts: Options) Library {
-    var ret = Library{
-        .step = b.addStaticLibrary("z", null),
-        .opts = opts,
-    };
+pub fn create(b: *std.build.Builder, target: std.zig.CrossTarget, mode: std.builtin.Mode) Library {
+    var ret = b.addStaticLibrary("z", null);
+    ret.setTarget(target);
+    ret.setBuildMode(mode);
+    ret.linkLibC();
+    ret.addCSourceFiles(srcs, &.{});
 
-    ret.step.setTarget(target);
-    ret.step.setBuildMode(mode);
-    ret.step.linkLibC();
-
-    ret.step.addCSourceFiles(srcs, &.{});
-
-    return ret;
+    return Library{ .step = ret };
 }
 
 const srcs = &.{

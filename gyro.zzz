@@ -24,5 +24,6 @@ pkgs:
       README.md
       LICENSE
       src/main.zig
+      src/rfc1591.txt
       c/*.c
       c/*.h

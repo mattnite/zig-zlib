@@ -20,12 +20,10 @@ const zlib = @import("path/to/zlib.zig");
 pub fn build(b: *std.build.Builder) void {
     // ...
 
-    const lib = zlib.create(b, target, mode, .{
-        .import_str = "zlib",
-    });
+    const lib = zlib.create(b, target, mode);
 
     const exe = b.addExecutable("my-program", "src/main.zig");
-    lib.link(exe);
+    lib.link(exe, .{ import_name = "zlib" });
 }
 ```
 
@@ -33,8 +31,8 @@ Now code that is part of the `my-program` executable can import the zlib binding
 
 ### Only link to your application
 
-In order to just link to the application, all you need to do is omit the `.import_str` argument to zlib's create options:
+In order to just link to the application, all you need to do is omit the `.import_name` argument to zlib's link options:
 
 ```zig
-    const lib = zlib.create(b, target, mode, .{});
+    lib.link(exe, .{});
 ```

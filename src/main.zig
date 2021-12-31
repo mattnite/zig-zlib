@@ -100,7 +100,7 @@ pub const gzip = struct {
             const WriterError = Error || WriterType.Error;
             const Writer = std.io.Writer(*Self, WriterError, write);
 
-            fn init(allocator: Allocator, inner_writer: WriterType) !Self {
+            pub fn init(allocator: Allocator, inner_writer: WriterType) !Self {
                 var ret = Self{
                     .allocator = allocator,
                     .stream = undefined,
@@ -125,7 +125,7 @@ pub const gzip = struct {
                 return if (rc == c.Z_OK) ret else errorFromInt(rc);
             }
 
-            fn deinit(self: *Self) void {
+            pub fn deinit(self: *Self) void {
                 const pinned = @ptrCast(*Allocator, @alignCast(@alignOf(*Allocator), self.stream.@"opaque".?));
                 _ = c.deflateEnd(self.stream);
                 self.allocator.destroy(pinned);
@@ -149,7 +149,7 @@ pub const gzip = struct {
                 }
             }
 
-            fn write(self: *Self, buf: []const u8) WriterError!usize {
+            pub fn write(self: *Self, buf: []const u8) WriterError!usize {
                 var tmp: [4096]u8 = undefined;
 
                 self.stream.next_in = @intToPtr([*]u8, @ptrToInt(buf.ptr));
@@ -172,7 +172,7 @@ pub const gzip = struct {
                 return buf.len - self.stream.avail_in;
             }
 
-            fn writer(self: *Self) Writer {
+            pub fn writer(self: *Self) Writer {
                 return .{ .context = self };
             }
         };

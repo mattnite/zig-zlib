@@ -8,7 +8,13 @@ If you like this project or other works of mine, please consider [donating to or
 
 ## How to use
 
-This repo contains code for your `build.zig` that can statically compile zlib, as well as some idiomatic Zig bindings for zlib that you can use in your application.
+This repo contains code for your `build.zig` that can statically compile zlib, as well as some idiomatic Zig bindings for zlib that you can use in your application. In either case below you will be able to include zlibs header with:
+
+```zig
+const c = @cImport({
+    @cInclude("zlib.h");
+});
+```
 
 ### Link and add bindings to your application
 

@@ -14,7 +14,7 @@ fn pathJoinRoot(comptime components: []const []const u8) []const u8 {
 }
 
 const package_path = pathJoinRoot(&.{ "src", "main.zig" });
-pub const include_dir = pathJoinRoot(&.{"c"});
+pub const include_dir = pathJoinRoot(&.{"zlib"});
 pub const Options = struct {
     import_name: ?[]const u8 = null,
 };
@@ -42,19 +42,19 @@ pub fn create(b: *std.build.Builder, target: std.zig.CrossTarget, mode: std.buil
 }
 
 const srcs = &.{
-    pathJoinRoot(&.{ "c", "adler32.c" }),
-    pathJoinRoot(&.{ "c", "compress.c" }),
-    pathJoinRoot(&.{ "c", "crc32.c" }),
-    pathJoinRoot(&.{ "c", "deflate.c" }),
-    pathJoinRoot(&.{ "c", "gzclose.c" }),
-    pathJoinRoot(&.{ "c", "gzlib.c" }),
-    pathJoinRoot(&.{ "c", "gzread.c" }),
-    pathJoinRoot(&.{ "c", "gzwrite.c" }),
-    pathJoinRoot(&.{ "c", "inflate.c" }),
-    pathJoinRoot(&.{ "c", "infback.c" }),
-    pathJoinRoot(&.{ "c", "inftrees.c" }),
-    pathJoinRoot(&.{ "c", "inffast.c" }),
-    pathJoinRoot(&.{ "c", "trees.c" }),
-    pathJoinRoot(&.{ "c", "uncompr.c" }),
-    pathJoinRoot(&.{ "c", "zutil.c" }),
+    pathJoinRoot(&.{ "zlib", "adler32.c" }),
+    pathJoinRoot(&.{ "zlib", "compress.c" }),
+    pathJoinRoot(&.{ "zlib", "crc32.c" }),
+    pathJoinRoot(&.{ "zlib", "deflate.c" }),
+    pathJoinRoot(&.{ "zlib", "gzclose.c" }),
+    pathJoinRoot(&.{ "zlib", "gzlib.c" }),
+    pathJoinRoot(&.{ "zlib", "gzread.c" }),
+    pathJoinRoot(&.{ "zlib", "gzwrite.c" }),
+    pathJoinRoot(&.{ "zlib", "inflate.c" }),
+    pathJoinRoot(&.{ "zlib", "infback.c" }),
+    pathJoinRoot(&.{ "zlib", "inftrees.c" }),
+    pathJoinRoot(&.{ "zlib", "inffast.c" }),
+    pathJoinRoot(&.{ "zlib", "trees.c" }),
+    pathJoinRoot(&.{ "zlib", "uncompr.c" }),
+    pathJoinRoot(&.{ "zlib", "zutil.c" }),
 };

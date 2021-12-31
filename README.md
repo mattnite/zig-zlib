@@ -4,7 +4,7 @@
 
 ## Like this project?
 
-If you like this project or other works of mine, please consider [donating to or sponsoring me](https://github.com/sponsors/mattnite) on Github [:heart](https://github.com/sponsors/mattnite)
+If you like this project or other works of mine, please consider [donating to or sponsoring me](https://github.com/sponsors/mattnite) on Github [:heart:](https://github.com/sponsors/mattnite)
 
 ## How to use
 

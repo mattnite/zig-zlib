@@ -20,7 +20,10 @@ pub const Library = struct {
         other.linkLibrary(self.step);
 
         if (opts.import_name) |import_name|
-            other.addPackagePath(import_name, package_path);
+            other.addAnonymousModule(
+                import_name,
+                .{ .source_file = .{ .path = package_path } },
+            );
     }
 };
 

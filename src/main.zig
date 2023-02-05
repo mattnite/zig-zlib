@@ -192,7 +192,7 @@ test "compress gzip with zig interface" {
     try writer.writeAll(input);
     try compressor.flush();
 
-    var decompressor = try std.compress.gzip.gzipStream(allocator, fifo.reader());
+    var decompressor = try std.compress.gzip.decompress(allocator, fifo.reader());
     defer decompressor.deinit();
 
     const actual = try decompressor.reader().readAllAlloc(allocator, std.math.maxInt(usize));

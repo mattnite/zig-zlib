@@ -16,7 +16,7 @@ pub const Library = struct {
     step: *std.build.LibExeObjStep,
 
     pub fn link(self: Library, other: *std.build.LibExeObjStep, opts: Options) void {
-        other.addIncludePath(include_dir);
+        other.addIncludePath(.{ .path = include_dir });
         other.linkLibrary(self.step);
 
         if (opts.import_name) |import_name|
@@ -48,10 +48,10 @@ const srcs = &.{
     root_path ++ "zlib/gzlib.c",
     root_path ++ "zlib/gzread.c",
     root_path ++ "zlib/gzwrite.c",
-    root_path ++ "zlib/inflate.c",
     root_path ++ "zlib/infback.c",
-    root_path ++ "zlib/inftrees.c",
     root_path ++ "zlib/inffast.c",
+    root_path ++ "zlib/inflate.c",
+    root_path ++ "zlib/inftrees.c",
     root_path ++ "zlib/trees.c",
     root_path ++ "zlib/uncompr.c",
     root_path ++ "zlib/zutil.c",

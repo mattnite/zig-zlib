@@ -57,9 +57,9 @@ fn zalloc(private: ?*anyopaque, items: c_uint, size: c_uint) callconv(.C) ?*anyo
     if (private == null)
         return null;
 
-    const allocator = @ptrCast(*Allocator, @alignCast(@alignOf(*Allocator), private.?));
+    const allocator: *Allocator = @ptrCast(@alignCast(private.?));
     var buf = allocator.alloc(u8, ZallocHeader.size_of_aligned + (items * size)) catch return null;
-    const header = @ptrCast(*ZallocHeader, @alignCast(@alignOf(*ZallocHeader), buf.ptr));
+    const header: *ZallocHeader = @ptrCast(@alignCast(buf.ptr));
     header.* = .{
         .magic = magic_value,
         .size = items * size,
@@ -72,15 +72,15 @@ fn zfree(private: ?*anyopaque, addr: ?*anyopaque) callconv(.C) void {
     if (private == null)
         return;
 
-    const allocator = @ptrCast(*Allocator, @alignCast(@alignOf(*Allocator), private.?));
-    const header = @intToPtr(*ZallocHeader, @ptrToInt(addr.?) - ZallocHeader.size_of_aligned);
+    const allocator: *Allocator = @ptrCast(@alignCast(private.?));
+    const header: *ZallocHeader = @ptrFromInt(@intFromPtr(addr.?) - ZallocHeader.size_of_aligned);
     if (builtin.mode != .ReleaseFast) {
         if (header.magic != magic_value)
             @panic("magic value is incorrect");
     }
 
     var buf: []align(alignment) u8 = undefined;
-    buf.ptr = @ptrCast([*]align(alignment) u8, @alignCast(alignment, header));
+    buf.ptr = @ptrCast(@alignCast(header));
     buf.len = ZallocHeader.size_of_aligned + header.size;
     allocator.free(buf);
 }
@@ -126,7 +126,7 @@ pub const gzip = struct {
             }
 
             pub fn deinit(self: *Self) void {
-                const pinned = @ptrCast(*Allocator, @alignCast(@alignOf(*Allocator), self.stream.@"opaque".?));
+                const pinned: *Allocator = @ptrCast(@alignCast(self.stream.@"opaque".?));
                 _ = c.deflateEnd(self.stream);
                 self.allocator.destroy(pinned);
                 self.allocator.destroy(self.stream);
@@ -152,8 +152,8 @@ pub const gzip = struct {
             pub fn write(self: *Self, buf: []const u8) WriterError!usize {
                 var tmp: [4096]u8 = undefined;
 
-                self.stream.next_in = @intToPtr([*]u8, @ptrToInt(buf.ptr));
-                self.stream.avail_in = @intCast(c_uint, buf.len);
+                self.stream.next_in = @ptrFromInt(@intFromPtr(buf.ptr));
+                self.stream.avail_in = @intCast(buf.len);
 
                 while (true) {
                     self.stream.next_out = &tmp;
